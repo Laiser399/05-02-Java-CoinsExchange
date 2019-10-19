@@ -10,26 +10,29 @@ import java.util.*;
 
 public class MoneyChanger {
 
-    public void start() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    public void start() {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            while (true) {
+                int exchangeCost = fetchExchangeCost(reader);
+                List<Integer> coinsCost = fetchCoinsCost(reader);
 
-        while (true) {
-            int exchangeCost = fetchExchangeCost(reader);
-            List<Integer> coinsCost = fetchCoinsCost(reader);
-
-            ExchangeResult result = exchange(exchangeCost, coinsCost);
-            if (result.isValid()) {
-                System.out.println("Exchange result: " + result);
+                ExchangeResult result = exchange(exchangeCost, coinsCost);
+                if (result.isValid()) {
+                    System.out.println("Exchange result: " + result);
+                }
+                else {
+                    System.out.println("Exchange impossible.");
+                }
             }
-            else {
-                System.out.println("Exchange impossible.");
-            }
+        }
+        catch (IOException e) {
+            System.out.println("Console IO error.");
         }
     }
 
     private int fetchExchangeCost(BufferedReader reader) throws IOException {
         Integer exchangeCost = null;
-        do {
+        while (exchangeCost == null) {
             System.out.print("Enter exchange cost: ");
 
             String exchangeCostString = Main.simplifyString(reader.readLine());
@@ -37,13 +40,11 @@ public class MoneyChanger {
             try {
                 exchangeCost = parseExchangeCost(exchangeCostString);
             }
-            catch (ValueException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
             catch (NumberFormatException e) {
-                System.out.println("Error: Wrong number format.");
+                System.out.println(e.getMessage());
             }
-        } while (exchangeCost == null);
+        }
+
         return exchangeCost;
     }
 
@@ -55,32 +56,29 @@ public class MoneyChanger {
             try {
                 coinsCost = parseCoinsCost(coinsCostString);
             }
-            catch (ValueException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
             catch (NumberFormatException e) {
-                System.out.println("Error: Wrong number format.");
+                System.out.println(e.getMessage());
             }
         } while (coinsCost == null);
         return coinsCost;
     }
 
-    private Integer parseExchangeCost(String exchangeCostString) throws ValueException, NumberFormatException{
+    private Integer parseExchangeCost(String exchangeCostString) throws NumberFormatException{
         int exchangeCost = Integer.parseInt(exchangeCostString);
         if (exchangeCost <= 0)
-            throw new ValueException("Exchange cost <= 0: \"" + exchangeCostString + "\".");
+            throw new NumberFormatException("Exchange cost <= 0: \"" + exchangeCostString + "\".");
         else
             return exchangeCost;
     }
 
-    private List<Integer> parseCoinsCost(String coinsCostString) throws ValueException, NumberFormatException {
+    private List<Integer> parseCoinsCost(String coinsCostString) throws NumberFormatException {
         coinsCostString = Main.simplifyString(coinsCostString);
 
         List<Integer> result = new ArrayList<>();
         for (String coinStr : coinsCostString.split("\\s")) {
             int coin = Integer.parseInt(coinStr);
             if (coin <= 0)
-                throw new ValueException("Wrong coin: \"" + coinStr + "\".");
+                throw new NumberFormatException("Wrong coin: \"" + coinStr + "\".");
             else if (!result.contains(coin))
                 result.add(coin);
         }
@@ -90,9 +88,7 @@ public class MoneyChanger {
     }
 
     private ExchangeResult exchange(int exchangeCost, List<Integer> sortedCoins) {
-        if (exchangeCost <= 0)
-            return ExchangeResult.getInvalid();
-        if (sortedCoins.isEmpty())
+        if (exchangeCost <= 0 || sortedCoins.isEmpty())
             return ExchangeResult.getInvalid();
 
         int currentCoin = sortedCoins.get(0);
