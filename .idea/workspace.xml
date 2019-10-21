@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0316208b-4491-4c51-b5fb-69790dfec6f3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LAB 05 02 exchange/META-INF/LAB 05 02 exchange.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LAB 05 02 exchange/com/mai/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LAB 05 02 exchange/com/mai/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LAB 05 02 exchange/com/mai/result/ValidResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LAB 05 02 exchange/com/mai/result/ValidResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mai/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mai/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mai/MoneyChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mai/MoneyChanger.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
